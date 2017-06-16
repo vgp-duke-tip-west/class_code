@@ -21,16 +21,20 @@ function showSelectionsJQuery(){
 }
 
 function showSelections(){
+    //getElementsByName returns an array of html elements whose name matches the one passed
+    // so this is an array of elements whose name is "hour"
     let radios = document.getElementsByName("hour");
     let checkboxes = document.getElementsByName("need");
     let input = document.getElementsByName("something");
+    
+    //getElementById returns a single element with the matching id.
     let output = document.getElementById("results");
     output.innerHTML = "";
     
     for(var i=0; i<radios.length; i++){
         if(radios[i].checked){
             output.innerHTML += "Radio Button Value: " + radios[i].value + "<br>"
-            }
+        }
     }
 
     for(var i=0; i<checkboxes.length; i++){
