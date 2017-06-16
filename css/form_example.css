@@ -1,0 +1,52 @@
+p {
+    color:purple;
+}
+body {
+    background-color:limegreen;
+}
+
+table {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    border-collapse:collapse;
+/*    border:1px solid black; */
+}
+th {
+    border: 1px solid black;
+}
+
+#something {
+    color:red;
+}
+
+.thisClass {
+    color:blue;
+}
+
+#j8675309{
+    border:1px solid purple;
+    position:absolute;
+    top:20px;
+    left:20px;
+}
+
+td, th{
+    width:20px;
+    height:20px;
+}
+
+tr:nth-child(even) td:nth-child(even){
+    background-color:black;
+}
+tr:nth-child(odd) td:nth-child(even){
+    background-color:white;
+}
+tr:nth-child(even) td:nth-child(odd){
+    background-color:white;
+}
+tr:nth-child(odd) td:nth-child(odd){
+    background-color:black;
+}
+
+

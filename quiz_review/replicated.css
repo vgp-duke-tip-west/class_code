@@ -1,0 +1,46 @@
+body{
+    background-color:black;
+    color:yellow;
+    font-family:courier;
+}
+
+.redText{
+    color:red;
+}
+
+.greenText{
+    color:green;
+    text-align:center;
+}
+
+ul{
+    list-style-type: circle;
+}
+
+table{
+    color:purple;
+    text-align:center;
+    border-collapse:collapse;
+}
+tr:nth-child(1){
+    font-weight:bold;
+}
+tr:nth-child(even) td{
+    background-color:lightgrey;
+}
+tr:nth-child(odd) td{
+    background-color:darkgrey;
+}
+
+td, th{
+    border-left:2px solid darkblue;
+    border-right:2px solid darkblue;
+}
+
+th{
+    background-color:darkgrey;
+}
+
+textarea{
+    font-family:arial;
+}
