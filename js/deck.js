@@ -2,14 +2,24 @@
 function Card(suit, rank) {
     this.suit = suit;
     this.rank = rank;
+    
+    this.toString = function() {
+        return this.rank + " of " + this.suit;
+    }
 }
 
 // this defines how to make a Deck object
 function Deck(){
-    
-    
     this.deal = function() {
         return this.deck.pop();
+    };
+    
+    this.dealN = function(n) {
+        let out = [];
+        for(var i = 0; i < n; i++){
+            out.push(this.deck.pop());
+        }
+        return out;
     };
     
     // This is the shuffle function from Rosetta Code: http://rosettacode.org/wiki/Playing_cards#JavaScript
@@ -22,7 +32,7 @@ function Deck(){
     
     this.reset = function() {
         this.deck = [];
-        suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+        suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
         ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
         for(var s = 0; s < suits.length; s++){
             for(var r = 0; r < ranks.length; r++){
@@ -30,6 +40,10 @@ function Deck(){
             }
         }  
     };
+    
+    this.cards_left = function() {
+        return this.deck.length;
+    }
     
     this.reset();
 }
