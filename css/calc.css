@@ -1,0 +1,13 @@
+table, tr, td{
+    border-collapse:collapse;
+    border:1px solid black;
+    text-align:center;
+    font-weight:bold;
+}
+td {
+    cursor:pointer;
+}
+
+input{
+    text-align:right;
+}
