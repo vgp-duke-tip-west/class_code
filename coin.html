@@ -1,0 +1,59 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title></title>
+        <style>
+            .show{
+                display:block;
+            }
+            .hide{
+                display:none;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="flip">Toss</button>
+        <button id="autoFlip">Toggle Auto Toss</button>
+        heads count: <input id="hc" type="number" disabled="true">
+        tails count:<input id="tc" type="number" disabled="true">
+        <br/><br/><br/><br/><br/>
+        <img src="images/heads.png" id="head" class="hide">
+        <img src="images/tails.png" id="tail" class="hide">
+        <script type="text/javascript">
+        document.getElementById('flip').addEventListener('click', toss);
+        document.getElementById('autoFlip').addEventListener('click', autoToss);
+        let tossing = 0;
+        function randInt(min, max){
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+        
+        function toss(){
+            let h = document.getElementById('head');
+            let t = document.getElementById('tail');
+            let c;
+            let rot = randInt(0, 360);
+            t.className = "hide";
+            h.className = "hide";
+            if(Math.random() > .5){
+                c = h;
+                document.getElementById('hc').value++;
+            } else {
+                c = t;
+                document.getElementById('tc').value++;
+            }
+            c.className = "show";
+            c.style.transform = `rotate(${rot}deg)`;
+        }
+        
+        function autoToss(){
+            if(tossing){
+                clearInterval(tossing);
+                tossing = 0;
+            } else {
+                let speed = parseInt(prompt("how fast (ms per flip)?"))
+                tossing = setInterval(toss, speed);
+            }
+        }
+        </script>
+    </body>
+</html>
