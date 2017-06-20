@@ -3,6 +3,10 @@
     <head>
         <title></title>
         <style>
+            .coin{
+                display:flex;
+                justify-content:center;
+            }
             .show{
                 display:block;
             }
@@ -12,19 +16,40 @@
         </style>
     </head>
     <body>
+        <button id="throw">Real Toss</button>
         <button id="flip">Toss</button>
         <button id="autoFlip">Toggle Auto Toss</button>
         heads count: <input id="hc" type="number" disabled="true">
         tails count:<input id="tc" type="number" disabled="true">
         <br/><br/><br/><br/><br/>
-        <img src="images/heads.png" id="head" class="hide">
-        <img src="images/tails.png" id="tail" class="hide">
+        <div class="coin">
+            <img src="images/heads.png" id="head" class="hide">
+            <img src="images/tails.png" id="tail" class="hide">
+        </div>
         <script type="text/javascript">
+        document.getElementById('throw').addEventListener('click', realToss);
         document.getElementById('flip').addEventListener('click', toss);
         document.getElementById('autoFlip').addEventListener('click', autoToss);
         let tossing = 0;
         function randInt(min, max){
             return Math.floor(Math.random() * (max - min)) + min;
+        }
+        
+        function realToss(){
+            flips = randInt(0, 20);
+            if(Math.random() > .5){
+                c = h;
+                document.getElementById('hc').value++;
+            } else {
+                c = t;
+                document.getElementById('tc').value++;
+            }
+            
+            for(i = 0; i < flips * 360; i++){
+                
+            }
+            
+            tossing = setInterval(toss);
         }
         
         function toss(){
