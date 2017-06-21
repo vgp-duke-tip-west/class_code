@@ -79,6 +79,7 @@ let player = { x:50,
                speed:2,
                color:"#ff0000"
              }
+
 let player2= { x:100,
                y:100,
                height:20,
