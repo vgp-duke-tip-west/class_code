@@ -1,9 +1,9 @@
 document.getElementById("start").addEventListener("click", startGame);
-const COLS = 10;
-const ROWS = 10;
-const DIFFICULTY = .2;
+let COLS;
+let ROWS;
+let DIFFICULTY;
 let isGameOver = false;
-
+document.body.addEventListener('contextmenu', function(e){e.preventDefault();});
 function isWin(){
     let clickedCount = document.querySelectorAll('[clicked]').length;
     let mineCount = document.querySelectorAll('[mine]').length;
@@ -44,10 +44,12 @@ function countNeighbors(cell){
 }
 
 function clickCell(e){
-    if(isGameOver){return;}
+    if(isNewGame){ this.removeAttribute("mine"); }
+    isNewGame = false;
+    if(isGameOver){ return; }
     if(this.classList.contains('flag')) { return; }
     if(this.hasAttribute('clicked')) { return; }
-    this.setAttribute('clicked', true);
+    
     if(this.hasAttribute("mine")){
         //You lose!
         isGameOver = true;
@@ -57,6 +59,8 @@ function clickCell(e){
         }
         return;
     }
+    
+    this.setAttribute('clicked', true);
     let neighbor_bombs = countNeighbors(this);
     if(neighbor_bombs){
         this.innerHTML = neighbor_bombs;
@@ -83,8 +87,20 @@ function flagCell(e){
     }
     
 }
+function getDifficulty(){
+    let radios = document.getElementsByName("difficulty");
+    for(var i = 0; i < radios.length; i++){
+        if(radios[i].checked){
+            return parseFloat(radios[i].value);
+        }
+    }
+}
 
 function startGame(){
+    COLS = parseInt(document.getElementById("cols").value);
+    ROWS = parseInt(document.getElementById("rows").value);
+    DIFFICULTY = getDifficulty();
+    isNewGame = true;
     isGameOver = false;
     //clear out old gameboard (this allows for a new game.)
     document.getElementById("gameboard").innerHTML = "";
