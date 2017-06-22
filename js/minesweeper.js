@@ -4,8 +4,18 @@ const ROWS = 10;
 const DIFFICULTY = .2;
 let isGameOver = false;
 
-function countNeighbors(cell){
-    let count = 0;
+function isWin(){
+    let clickedCount = document.querySelectorAll('[clicked]').length;
+    let mineCount = document.querySelectorAll('[mine]').length;
+    let cellCount = ROWS * COLS;
+    if(cellCount == clickedCount + mineCount){
+        isGameOver = true;
+        return true;
+    }
+    return false;
+}
+
+function getNeighbors(cell){
     let x = parseInt(cell.getAttribute('x'));
     let y = parseInt(cell.getAttribute('y'));
     //(x-1, y-1)  (x, y-1)  (x+1, y-1)
@@ -19,24 +29,27 @@ function countNeighbors(cell){
     let sw = document.getElementById((x-1) + "_" + (y+1));
     let s  = document.getElementById((x)   + "_" + (y+1));
     let se = document.getElementById((x+1) + "_" + (y+1));
-    if(nw && nw.hasAttribute("mine")){ count++; }
-    if(n && n.hasAttribute("mine")){ count++; }
-    if(ne && ne.hasAttribute("mine")){ count++; }
-    if(w && w.hasAttribute("mine")){ count++; }
-    if(e && e.hasAttribute("mine")){ count++; }
-    if(sw && sw.hasAttribute("mine")){ count++; }
-    if(s && s.hasAttribute("mine")){ count++; }
-    if(se && se.hasAttribute("mine")){ count++; }
+    return [nw, n, ne, w, e, sw, s, se];
+}
+
+function countNeighbors(cell){
+    let count = 0;
+    let neighbors = getNeighbors(cell);
+    for(var i = 0; i < neighbors.length; i++){
+        if(neighbors[i] && neighbors[i].hasAttribute("mine")){
+            count++
+        }
+    }
     return count;
 }
 
 function clickCell(e){
     if(isGameOver){return;}
-    console.log("clickCell!", this);
-    
+    if(this.classList.contains('flag')) { return; }
+    if(this.hasAttribute('clicked')) { return; }
+    this.setAttribute('clicked', true);
     if(this.hasAttribute("mine")){
         //You lose!
-        console.log("game over")
         isGameOver = true;
         let bombs = document.querySelectorAll("[mine]");
         for(var i = 0; i < bombs.length; i++){
@@ -44,14 +57,31 @@ function clickCell(e){
         }
         return;
     }
-    this.innerHTML = countNeighbors(this);
-    console.log(countNeighbors(this));
-    
+    let neighbor_bombs = countNeighbors(this);
+    if(neighbor_bombs){
+        this.innerHTML = neighbor_bombs;
+        this.className = "c" + neighbor_bombs;
+    } else {
+        let neighbors = getNeighbors(this);
+        for(var i = 0; i < neighbors.length; i++){
+            if(neighbors[i]) {
+                neighbors[i].click();
+            }
+        }
+    }
+    isWin();
 }
 
 function flagCell(e){
-    console.log("flagCell!", e);
     e.preventDefault();
+    if(isGameOver) { return; }
+    if(this.hasAttribute('clicked')) { return; }
+    if(this.classList.contains('flag')){
+        this.classList.remove('flag');
+    } else {
+        this.className = 'flag';
+    }
+    
 }
 
 function startGame(){
